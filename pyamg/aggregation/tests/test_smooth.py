@@ -9,7 +9,7 @@ from pyamg.gallery import poisson, linear_elasticity, load_example, \
     gauge_laplacian
 from pyamg.aggregation import smoothed_aggregation_solver, rootnode_solver
 from pyamg.amg_core import incomplete_mat_mult_bsr
-
+from pyamg.util.new_funcs import eye_array
 
 class TestEnergyMin(TestCase):
     def test_incomplete_mat_mult_bsr(self):
@@ -369,7 +369,7 @@ class TestEnergyMin(TestCase):
 
         # Simple, imaginary-valued problems
         name = 'random imaginary + I'
-        iA = A + 1.0j * sparse.eye_array(A.shape[0], A.shape[1])
+        iA = A + 1.0j * eye_array(A.shape[0], A.shape[1])
 
         cases.append((iA, B, ('jacobi',
                               {'filter_entries': True, 'weighting': 'local'}), name))
@@ -503,7 +503,7 @@ class TestEnergyMin(TestCase):
                 assert_almost_equal((P@Bc)[mask, :], Bf_H[mask, :])
 
                 # P should be the identity at Cpts
-                I1 = sparse.eye_array(T.shape[1], format='csr', dtype=T.dtype)
+                I1 = eye_array(T.shape[1], format='csr', dtype=T.dtype)
                 I2 = P[Cpts, :]
                 assert_almost_equal(I1.data, I2.data)
                 assert_equal(I1.indptr, I2.indptr)

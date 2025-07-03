@@ -12,6 +12,7 @@ from .util.utils import to_type
 from .util.params import set_tol
 from .relaxation import smoothing
 from .util import upcast
+from .util.new_funcs import eye_array
 
 
 class MultilevelSolver:
@@ -525,7 +526,7 @@ class MultilevelSolver:
                     callback_wrapper = callback
 
                 # for scipy solvers, see if rtol is available
-                kwargs['rtol'] = tol
+                kwargs['tol'] = tol
                 kwargs['atol'] = 0
 
                 x, info = accel(A, b, x0=x0, maxiter=maxiter, M=M,
@@ -741,7 +742,7 @@ def coarse_grid_solver(solver):
                 Acsc.eliminate_zeros()
                 diffptr = Acsc.indptr[:-1] - Acsc.indptr[1:]
                 nonzero_cols = (diffptr != 0).nonzero()[0]
-                Map = sp.sparse.eye_array(Acsc.shape[0], Acsc.shape[1], format='csc')
+                Map = eye_array(Acsc.shape[0], Acsc.shape[1], format='csc')
                 Map = Map[:, nonzero_cols]
                 Acsc = Map.T.tocsc() @ Acsc @ Map
                 self.LU = sp.sparse.linalg.splu(Acsc, **kwargs)

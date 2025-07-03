@@ -7,6 +7,7 @@ from pyamg.gallery import poisson
 from pyamg import smoothed_aggregation_solver, ruge_stuben_solver
 from pyamg.util.utils import profile_solver
 from pyamg.relaxation.smoothing import change_smoothers
+from pyamg.util.new_funcs import eye_array
 
 methods = [('gauss_seidel', {'sweep': 'symmetric'}),
            'jacobi',
@@ -109,7 +110,7 @@ class TestSolverMatrix(TestCase):
         Relaxation parameters should change.  This is not checked.
         """
         A = poisson((20,), format='csr')
-        Anew = sparse.eye_array(A.shape[0], format='csr')
+        Anew = eye_array(A.shape[0], format='csr')
         register = ['gauss_seidel',
                     'jacobi',
                     'schwarz',

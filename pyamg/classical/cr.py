@@ -3,7 +3,8 @@
 from copy import deepcopy
 import numpy as np
 from scipy.linalg import norm
-from scipy.sparse import issparse, diags_array
+from scipy.sparse import issparse
+from ..util.new_funcs import diags_array
 
 from pyamg import amg_core
 from ..relaxation.relaxation import gauss_seidel, gauss_seidel_indexed

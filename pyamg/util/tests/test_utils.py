@@ -1,6 +1,8 @@
 """Test utils."""
 import numpy as np
-from scipy.sparse import bsr_array, csr_array, csc_array, issparse, diags_array
+from scipy.sparse import bsr_array, csr_array, csc_array, issparse
+
+from pyamg.util.new_funcs import diags_array
 
 from numpy.testing import (TestCase, assert_equal, assert_almost_equal,
                            assert_array_almost_equal, assert_array_equal)
@@ -166,7 +168,7 @@ class TestUtils(TestCase):
         opts = []
         opts.append({})
 
-        nextopt = {'accel': cg, 'rtol': 1e-10, 'atol': 0}
+        nextopt = {'accel': cg, 'tol': 1e-10, 'atol': 0}
         opts.append(nextopt)
 
         for kwargs in opts:
@@ -1194,7 +1196,7 @@ class TestComplexUtils(TestCase):
         opts = []
         opts.append({})
 
-        nextopt = {'accel': cg, 'rtol': 1e-10, 'atol': 0}
+        nextopt = {'accel': cg, 'tol': 1e-10, 'atol': 0}
         opts.append(nextopt)
 
         for kwargs in opts:

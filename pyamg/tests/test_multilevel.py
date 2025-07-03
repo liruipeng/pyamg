@@ -55,7 +55,7 @@ class TestMultilevel(TestCase):
 
         for cycle in ['V', 'W', 'F']:
             M = ml.aspreconditioner(cycle=cycle)
-            x, _info = cg(A, b, M=M, rtol=1e-8, maxiter=30, atol=0)
+            x, _info = cg(A, b, M=M, tol=1e-8, maxiter=30, atol=0)
             # cg satisfies convergence in the preconditioner norm
             assert precon_norm(b - A@x, ml) < 1e-8*precon_norm(b, ml)
 

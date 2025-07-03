@@ -8,6 +8,7 @@ import pytest
 
 import pyamg
 from pyamg import amg_core
+from pyamg.util.new_funcs import diags_array
 
 
 @pytest.fixture
@@ -225,7 +226,7 @@ def test_rebalance():
     # 0--1--2--3--4--5--6 <- graph
     # x  x  x  x  x  x  o <- cluster id
     # nearest neigbor unit distance
-    G = sparse.diags_array([1., 0, 1], offsets=[-1, 0, 1], shape=(7, 7)).tocsr()
+    G = diags_array([1., 0, 1], offsets=[-1, 0, 1], shape=(7, 7)).tocsr()
     c = np.array([3, 6], dtype=np.int32)
     m = np.array([0, 0, 0, 0, 0, 0, 1], dtype=np.int32)
     d = np.array([3, 2, 1, 0, 1, 2, 0], dtype=np.float64)

@@ -3,7 +3,8 @@ import warnings
 import numpy as np
 from numpy.testing import TestCase, assert_almost_equal, assert_allclose
 import scipy
-from scipy.sparse import csr_array, bsr_array, diags_array, eye_array
+from scipy.sparse import csr_array, bsr_array
+from pyamg.util.new_funcs import diags_array, eye_array
 from scipy.sparse import SparseEfficiencyWarning
 from scipy.linalg import solve
 

@@ -12,6 +12,7 @@ from pyamg.graph import (maximal_independent_set, vertex_coloring,
                          metis_partition)
 from pyamg.graph_ref import bellman_ford_reference, bellman_ford_balanced_reference
 from pyamg import amg_core
+from pyamg.util.new_funcs import matrix_power
 
 
 def canonical_graph(G):
@@ -84,7 +85,7 @@ class TestGraph(TestCase):
             for k in [1, 2, 3, 4]:
                 mis = maximal_independent_set(G, k=k)
                 if k > 1:
-                    G = sparse.linalg.matrix_power(G + np.eye(G.shape[0]), k)
+                    G = matrix_power(G + np.eye(G.shape[0]), k)
                     G = canonical_graph(G)
                 assert_is_mis(G, mis)
 

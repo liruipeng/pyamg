@@ -2,7 +2,8 @@
 import numpy as np
 
 from numpy.testing import TestCase, assert_array_almost_equal
-from scipy.sparse import bsr_array, diags_array
+from scipy.sparse import bsr_array
+from pyamg.util.new_funcs import diags_array
 from pyamg.classical.air import air_solver
 from pyamg.gallery import poisson
 

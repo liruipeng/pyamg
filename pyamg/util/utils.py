@@ -3,9 +3,10 @@
 from warnings import warn
 
 import numpy as np
-from scipy.sparse import (issparse, eye_array,
+from scipy.sparse import (issparse,
                           csr_array, csc_array, bsr_array, coo_array,)
 from scipy.linalg import eigvals
+from .new_funcs import eye_array
 
 # pylint: disable=no-name-in-module
 from scipy.sparse._sparsetools import (csr_scale_rows, bsr_scale_rows,

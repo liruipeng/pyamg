@@ -19,7 +19,7 @@ from .util.linalg import approximate_spectral_radius
 from .util.utils import (scale_rows_by_largest_entry, amalgamate, scale_rows,
                          get_block_diag, scale_columns)
 from .util.params import set_tol
-
+from .util.new_funcs import diags_array, eye_array
 
 def distance_strength_of_connection(A, V, theta=2.0, relative_drop=True):
     """Distance based strength-of-connection.
@@ -99,7 +99,7 @@ def distance_strength_of_connection(A, V, theta=2.0, relative_drop=True):
                                                 C.indices, C.data)
     C.eliminate_zeros()
 
-    C = C + sparse.eye_array(C.shape[0], C.shape[1], format='csr')
+    C = C + eye_array(C.shape[0], C.shape[1], format='csr')
 
     # Standardized strength values require small values be weak and large
     # values be strong.  So, we invert the distances.
@@ -453,7 +453,7 @@ def energy_based_strength_of_connection(A, theta=0.0, k=2):
 
     # Approximate A-inverse with k steps of w-Jacobi and a zero initial guess
     S = sparse.csc_array(A.shape, dtype=A.dtype)  # empty matrix
-    Id = sparse.eye_array(A.shape[0], A.shape[1], format='csc')
+    Id = eye_array(A.shape[0], A.shape[1], format='csc')
     for _i in range(k + 1):
         S = S + omega * (Dinv @ (Id - A @ S))
 
@@ -629,9 +629,9 @@ def evolution_strength_of_connection(A, B=None, epsilon=4.0, k=2,
 
     # Calculate D_A for later use in the minimization problem
     if proj_type == 'D_A':
-        D_A = sparse.diags_array([D], offsets=[0], shape=(dimen, dimen), format='csr')
+        D_A = diags_array([D], offsets=[0], shape=(dimen, dimen), format='csr')
     else:
-        D_A = sparse.eye_array(dimen, format='csr', dtype=A.dtype)
+        D_A = eye_array(dimen, format='csr', dtype=A.dtype)
 
     # Calculate (I - delta_t Dinv A)^k
     #      In order to later access columns, we calculate the transpose in
@@ -642,7 +642,7 @@ def evolution_strength_of_connection(A, B=None, epsilon=4.0, k=2,
     ninc = k - 2**nsquare
 
     # Calculate one time step
-    Id = sparse.eye_array(dimen, format='csr', dtype=A.dtype)
+    Id = eye_array(dimen, format='csr', dtype=A.dtype)
     Atilde = Id - (1.0 / rho_DinvA) * Dinv_A
     Atilde = Atilde.T.tocsr()
 
@@ -828,7 +828,7 @@ def evolution_strength_of_connection(A, B=None, epsilon=4.0, k=2,
         Atilde = 0.5 * (Atilde + Atilde.T)
 
     # Set diagonal to 1.0, as each point is strongly connected to itself.
-    Id = sparse.eye_array(dimen, format='csr')
+    Id = eye_array(dimen, format='csr')
     Id.data -= Atilde.diagonal()
     Atilde = Atilde + Id
 
@@ -1064,7 +1064,7 @@ def distance_measure_common(A, func, alpha, R, k, epsilon):
     C.data = 1.0 / C.data
 
     # Put an identity on the diagonal
-    C = C + sparse.eye_array(C.shape[0], C.shape[1], format='csr')
+    C = C + eye_array(C.shape[0], C.shape[1], format='csr')
 
     # Scale C by the largest magnitude entry in each row
     C = scale_rows_by_largest_entry(C)

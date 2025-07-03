@@ -3,7 +3,7 @@
 from warnings import warn
 import numpy as np
 from scipy.sparse import csr_array, bsr_array, issparse, \
-    eye_array, SparseEfficiencyWarning
+    SparseEfficiencyWarning
 
 from ..multilevel import MultilevelSolver
 from ..strength import symmetric_strength_of_connection, \
@@ -20,6 +20,7 @@ from .aggregate import standard_aggregation, lloyd_aggregation
 from .smooth import jacobi_prolongation_smoother, \
     energy_prolongation_smoother, richardson_prolongation_smoother
 from .tentative import fit_candidates
+from ..util.new_funcs import eye_array
 
 
 def eliminate_local_candidates(x, AggOp, A, T, thresh=1.0, **kwargs):

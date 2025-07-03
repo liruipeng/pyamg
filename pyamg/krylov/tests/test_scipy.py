@@ -52,8 +52,8 @@ class TestScipy(TestCase):
 
             # check if scipy gmres has rtol
             kwargs['atol'] = 0
-            kwargs['rtol'] = rtol
-            del kwargs['tol']
+            kwargs['tol'] = rtol
+            # del kwargs['tol']
 
             _ = sla.gmres(A, b, x0, callback=callback, callback_type='pr_norm', **kwargs)
 
